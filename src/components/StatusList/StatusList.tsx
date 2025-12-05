@@ -8,56 +8,8 @@ import {
   Typography,
   Chip,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  list: {
-    width: '100%',
-  },
-  listItem: {
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(1),
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-  listItemIcon: {
-    minWidth: 40,
-  },
-  statusIcon: {
-    fontSize: 12,
-  },
-  activeIcon: {
-    color: theme.palette.success.main,
-  },
-  pendingIcon: {
-    color: theme.palette.warning.main,
-  },
-  errorIcon: {
-    color: theme.palette.error.main,
-  },
-  chip: {
-    marginLeft: 'auto',
-    fontWeight: 500,
-  },
-  activeChip: {
-    backgroundColor: theme.palette.success.light,
-    color: theme.palette.success.contrastText,
-  },
-  pendingChip: {
-    backgroundColor: theme.palette.warning.light,
-    color: theme.palette.warning.contrastText,
-  },
-  errorChip: {
-    backgroundColor: theme.palette.error.light,
-    color: theme.palette.error.contrastText,
-  },
-}));
 
 interface StatusItem {
   name: string;
@@ -66,7 +18,6 @@ interface StatusItem {
 }
 
 export const StatusList = () => {
-  const classes = useStyles();
 
   const statusItems: StatusItem[] = [
     { name: 'Service A', status: 'active', description: 'Running smoothly' },
@@ -107,13 +58,22 @@ export const StatusList = () => {
       <Typography variant="h6" gutterBottom>
         Service Status
       </Typography>
-      <List className={classes.list}>
+      <List style={{ width: '100%' }}>
         {statusItems.map((item, index) => (
-          <ListItem key={index} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
+          <ListItem
+            key={index}
+            style={{
+              borderRadius: 4,
+              marginBottom: 8,
+              backgroundColor: '#f5f5f5',
+            }}
+          >
+            <ListItemIcon style={{ minWidth: 40 }}>
               <FiberManualRecordIcon
-                className={`${classes.statusIcon} ${getIconClass(item.status)}`}
-              />
+                style={{
+                  fontSize: 12,
+                  ...getIconStyle(item.status),
+                }}
             </ListItemIcon>
             <ListItemText
               primary={item.name}
@@ -122,7 +82,11 @@ export const StatusList = () => {
             <Chip
               label={item.status}
               size="small"
-              className={`${classes.chip} ${getChipClass(item.status)}`}
+              style={{
+                marginLeft: 'auto',
+                fontWeight: 500,
+                ...getChipStyle(item.status),
+              }}
             />
           </ListItem>
         ))}
