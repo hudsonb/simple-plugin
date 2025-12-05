@@ -27,34 +27,39 @@ export const StatusList = () => {
     { name: 'Service E', status: 'error', description: 'Needs attention' },
   ];
 
-  const getIconClass = (status: string) => {
+  const getIconStyle = (status: string) => {
     switch (status) {
       case 'active':
-        return classes.activeIcon;
+        return { color: '#4caf50' };
       case 'pending':
-        return classes.pendingIcon;
+        return { color: '#ff9800' };
       case 'error':
-        return classes.errorIcon;
+        return { color: '#f44336' };
       default:
-        return '';
+        return {};
     }
   };
 
-  const getChipClass = (status: string) => {
+  const getChipStyle = (status: string) => {
     switch (status) {
       case 'active':
-        return classes.activeChip;
+        return { backgroundColor: '#a5d6a7', color: '#fff' };
       case 'pending':
-        return classes.pendingChip;
+        return { backgroundColor: '#ffe082', color: '#fff' };
       case 'error':
-        return classes.errorChip;
+        return { backgroundColor: '#ef9a9a', color: '#fff' };
       default:
-        return '';
+        return {};
     }
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper
+      style={{
+        padding: 16,
+        marginBottom: 16,
+      }}
+    >
       <Typography variant="h6" gutterBottom>
         Service Status
       </Typography>
