@@ -8,23 +8,20 @@ import {
   Typography,
   Chip,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
-const useStyles = makeStyles(theme => ({
+const styles = {
   paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    padding: 16,
+    marginBottom: 16,
   },
   list: {
     width: '100%',
   },
   listItem: {
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(1),
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
+    borderRadius: 4,
+    marginBottom: 8,
+    cursor: 'pointer',
   },
   listItemIcon: {
     minWidth: 40,
@@ -33,31 +30,31 @@ const useStyles = makeStyles(theme => ({
     fontSize: 12,
   },
   activeIcon: {
-    color: theme.palette.success.main,
+    color: '#4caf50',
   },
   pendingIcon: {
-    color: theme.palette.warning.main,
+    color: '#ff9800',
   },
   errorIcon: {
-    color: theme.palette.error.main,
+    color: '#f44336',
   },
   chip: {
     marginLeft: 'auto',
     fontWeight: 500,
   },
   activeChip: {
-    backgroundColor: theme.palette.success.light,
-    color: theme.palette.success.contrastText,
+    backgroundColor: '#a5d6a7',
+    color: '#ffffff',
   },
   pendingChip: {
-    backgroundColor: theme.palette.warning.light,
-    color: theme.palette.warning.contrastText,
+    backgroundColor: '#ffe082',
+    color: '#ffffff',
   },
   errorChip: {
-    backgroundColor: theme.palette.error.light,
-    color: theme.palette.error.contrastText,
+    backgroundColor: '#ef9a9a',
+    color: '#ffffff',
   },
-}));
+};
 
 interface StatusItem {
   name: string;
@@ -66,7 +63,6 @@ interface StatusItem {
 }
 
 export const StatusList = () => {
-  const classes = useStyles();
 
   const statusItems: StatusItem[] = [
     { name: 'Service A', status: 'active', description: 'Running smoothly' },
@@ -103,16 +99,29 @@ export const StatusList = () => {
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper style={styles.paper}>
       <Typography variant="h6" gutterBottom>
         Service Status
       </Typography>
-      <List className={classes.list}>
+      <List style={styles.list}>
         {statusItems.map((item, index) => (
-          <ListItem key={index} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
+          <ListItem
+            key={index}
+            style={{
+              ...styles.listItem,
+              ':hover': { backgroundColor: '#f5f5f5' },
+            }}
+          >
+            <ListItemIcon style={styles.listItemIcon}>
               <FiberManualRecordIcon
-                className={`${classes.statusIcon} ${getIconClass(item.status)}`}
+                style={{
+                  ...styles.statusIcon,
+                  ...(item.status === 'active'
+                    ? styles.activeIcon
+                    : item.status === 'pending'
+                    ? styles.pendingIcon
+                    : styles.errorIcon),
+                }}
               />
             </ListItemIcon>
             <ListItemText
@@ -122,7 +131,14 @@ export const StatusList = () => {
             <Chip
               label={item.status}
               size="small"
-              className={`${classes.chip} ${getChipClass(item.status)}`}
+              style={{
+                ...styles.chip,
+                ...(item.status === 'active'
+                  ? styles.activeChip
+                  : item.status === 'pending'
+                  ? styles.pendingChip
+                  : styles.errorChip),
+              }}
             />
           </ListItem>
         ))}
