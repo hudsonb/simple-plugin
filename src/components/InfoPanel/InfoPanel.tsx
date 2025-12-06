@@ -77,9 +77,9 @@ export const InfoPanel = () => {
   };
 
   const infoItems = [
-    { icon: <InfoIcon className={classes.icon} />, label: 'Total Items', value: '42' },
-    { icon: <TrendingUpIcon className={classes.icon} />, label: 'Active', value: '38' },
-    { icon: <CheckCircleIcon className={classes.icon} />, label: 'Completed', value: '4' },
+    { icon: <InfoIcon />, label: 'Total Items', value: '42' },
+    { icon: <TrendingUpIcon />, label: 'Active', value: '38' },
+    { icon: <CheckCircleIcon />, label: 'Completed', value: '4' },
   ];
 
   return (
