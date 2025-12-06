@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: simple-plugin
+  description: Simple example plugin
+  annotations:
+    pagerduty.com/service-id: PHBEZKU
+spec:
+  type: backstage-frontend-plugin
+  lifecycle: production
+  owner: bhudson
