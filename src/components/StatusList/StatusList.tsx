@@ -8,56 +8,7 @@ import {
   Typography,
   Chip,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  list: {
-    width: '100%',
-  },
-  listItem: {
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(1),
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-  listItemIcon: {
-    minWidth: 40,
-  },
-  statusIcon: {
-    fontSize: 12,
-  },
-  activeIcon: {
-    color: theme.palette.success.main,
-  },
-  pendingIcon: {
-    color: theme.palette.warning.main,
-  },
-  errorIcon: {
-    color: theme.palette.error.main,
-  },
-  chip: {
-    marginLeft: 'auto',
-    fontWeight: 500,
-  },
-  activeChip: {
-    backgroundColor: theme.palette.success.light,
-    color: theme.palette.success.contrastText,
-  },
-  pendingChip: {
-    backgroundColor: theme.palette.warning.light,
-    color: theme.palette.warning.contrastText,
-  },
-  errorChip: {
-    backgroundColor: theme.palette.error.light,
-    color: theme.palette.error.contrastText,
-  },
-}));
 
 interface StatusItem {
   name: string;
@@ -66,7 +17,56 @@ interface StatusItem {
 }
 
 export const StatusList = () => {
-  const classes = useStyles();
+  const paperStyle = {
+    padding: 16,
+    marginBottom: 16,
+  };
+
+  const listItemStyle = {
+    borderRadius: 4,
+    marginBottom: 8,
+    transition: 'background-color 0.3s',
+  };
+
+  const listItemIconStyle = {
+    minWidth: 40,
+  };
+
+  const statusIconStyle = {
+    fontSize: 12,
+  };
+
+  const activeIconStyle = {
+    color: '#4caf50',
+  };
+
+  const pendingIconStyle = {
+    color: '#ff9800',
+  };
+
+  const errorIconStyle = {
+    color: '#f44336',
+  };
+
+  const chipStyle = {
+    marginLeft: 'auto',
+    fontWeight: 500,
+  };
+
+  const activeChipStyle = {
+    backgroundColor: '#a5d6a7',
+    color: '#fff',
+  };
+
+  const pendingChipStyle = {
+    backgroundColor: '#ffe082',
+    color: '#fff',
+  };
+
+  const errorChipStyle = {
+    backgroundColor: '#ef9a9a',
+    color: '#fff',
+  };
 
   const statusItems: StatusItem[] = [
     { name: 'Service A', status: 'active', description: 'Running smoothly' },
@@ -76,43 +76,43 @@ export const StatusList = () => {
     { name: 'Service E', status: 'error', description: 'Needs attention' },
   ];
 
-  const getIconClass = (status: string) => {
+  const getIconStyle = (status: string) => {
     switch (status) {
       case 'active':
-        return classes.activeIcon;
+        return activeIconStyle;
       case 'pending':
-        return classes.pendingIcon;
+        return pendingIconStyle;
       case 'error':
-        return classes.errorIcon;
+        return errorIconStyle;
       default:
-        return '';
+        return {};
     }
   };
 
-  const getChipClass = (status: string) => {
+  const getChipStyle = (status: string) => {
     switch (status) {
       case 'active':
-        return classes.activeChip;
+        return activeChipStyle;
       case 'pending':
-        return classes.pendingChip;
+        return pendingChipStyle;
       case 'error':
-        return classes.errorChip;
+        return errorChipStyle;
       default:
-        return '';
+        return {};
     }
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper style={paperStyle}>
       <Typography variant="h6" gutterBottom>
         Service Status
       </Typography>
-      <List className={classes.list}>
+      <List>
         {statusItems.map((item, index) => (
-          <ListItem key={index} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
+          <ListItem key={index} style={listItemStyle}>
+            <ListItemIcon style={listItemIconStyle}>
               <FiberManualRecordIcon
-                className={`${classes.statusIcon} ${getIconClass(item.status)}`}
+                style={{ ...statusIconStyle, ...getIconStyle(item.status) }}
               />
             </ListItemIcon>
             <ListItemText
@@ -122,7 +122,7 @@ export const StatusList = () => {
             <Chip
               label={item.status}
               size="small"
-              className={`${classes.chip} ${getChipClass(item.status)}`}
+              style={{ ...chipStyle, ...getChipStyle(item.status) }}
             />
           </ListItem>
         ))}
