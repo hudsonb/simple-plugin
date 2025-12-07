@@ -1,43 +1,42 @@
 import React from 'react';
 import { Paper, Typography, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import InfoIcon from '@material-ui/icons/Info';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-const useStyles = makeStyles(theme => ({
+const styles = {
   paper: {
-    padding: theme.spacing(3),
-    marginBottom: theme.spacing(2),
-    backgroundColor: theme.palette.background.paper,
+    padding: 24,
+    marginBottom: 16,
+    backgroundColor: '#ffffff',
   },
   infoItem: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(2),
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.background.default,
+    padding: 16,
+    borderRadius: 4,
+    backgroundColor: '#f5f5f5',
     '&:hover': {
-      backgroundColor: theme.palette.action.hover,
+      backgroundColor: '#e0e0e0',
       transform: 'translateY(-2px)',
       transition: 'all 0.3s ease-in-out',
     },
   },
   icon: {
-    marginRight: theme.spacing(2),
-    color: theme.palette.primary.main,
+    marginRight: 16,
+    color: '#3f51b5',
     fontSize: 32,
   },
   text: {
     fontSize: 14,
-    color: theme.palette.text.secondary,
+    color: '#757575',
   },
   value: {
     fontSize: 18,
     fontWeight: 600,
-    color: theme.palette.text.primary,
+    color: '#212121',
   },
-}));
+};
 
 export const InfoPanel = () => {
   const infoItems = [
