@@ -40,27 +40,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const InfoPanel = () => {
-  const classes = useStyles();
-
   const infoItems = [
-    { icon: <InfoIcon className={classes.icon} />, label: 'Total Items', value: '42' },
-    { icon: <TrendingUpIcon className={classes.icon} />, label: 'Active', value: '38' },
-    { icon: <CheckCircleIcon className={classes.icon} />, label: 'Completed', value: '4' },
+    { icon: <InfoIcon style={styles.icon} />, label: 'Total Items', value: '42' },
+    { icon: <TrendingUpIcon style={styles.icon} />, label: 'Active', value: '38' },
+    { icon: <CheckCircleIcon style={styles.icon} />, label: 'Completed', value: '4' },
   ];
 
   return (
-    <Paper className={classes.paper}>
+    <Paper style={styles.paper}>
       <Typography variant="h6" gutterBottom>
         Information Panel
       </Typography>
       <Grid container spacing={2}>
         {infoItems.map((item, index) => (
           <Grid item xs={12} sm={4} key={index}>
-            <div className={classes.infoItem}>
+            <div style={styles.infoItem}>
               {item.icon}
               <div>
-                <Typography className={classes.text}>{item.label}</Typography>
-                <Typography className={classes.value}>{item.value}</Typography>
+                <Typography style={styles.text}>{item.label}</Typography>
+                <Typography style={styles.value}>{item.value}</Typography>
               </div>
             </div>
           </Grid>
