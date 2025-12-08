@@ -22,14 +22,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ExampleComponent = () => {
-  const classes = useStyles();
-
   return (
     <Page themeId="tool">
       <Header title="Simple Plugin" subtitle="A demonstration plugin with MUI styles" />
       <Content>
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3} className={classes.gridContainer}>
+        <Container maxWidth="lg" style={{ paddingTop: 24, paddingBottom: 24 }}>
+          <Grid container spacing={3} style={{ marginTop: 16 }}>
             <Grid item xs={12}>
               <WelcomeCard />
             </Grid>
@@ -37,7 +35,11 @@ export const ExampleComponent = () => {
               <InfoPanel />
             </Grid>
             <Grid item xs={12}>
-              <div className={classes.section}>
+              <div style={{
+                padding: 16,
+                borderRadius: 4,
+                backgroundColor: '#f5f5f5',
+              }}>
                 <StatusList />
               </div>
             </Grid>

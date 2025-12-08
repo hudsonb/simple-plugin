@@ -66,8 +66,6 @@ interface StatusItem {
 }
 
 export const StatusList = () => {
-  const classes = useStyles();
-
   const statusItems: StatusItem[] = [
     { name: 'Service A', status: 'active', description: 'Running smoothly' },
     { name: 'Service B', status: 'active', description: 'All systems operational' },
@@ -76,44 +74,49 @@ export const StatusList = () => {
     { name: 'Service E', status: 'error', description: 'Needs attention' },
   ];
 
-  const getIconClass = (status: string) => {
+  const getIconStyle = (status: string) => {
     switch (status) {
       case 'active':
-        return classes.activeIcon;
+        return { color: '#4caf50' };
       case 'pending':
-        return classes.pendingIcon;
+        return { color: '#ff9800' };
       case 'error':
-        return classes.errorIcon;
+        return { color: '#f44336' };
       default:
-        return '';
+        return {};
     }
   };
 
-  const getChipClass = (status: string) => {
+  const getChipStyle = (status: string) => {
     switch (status) {
       case 'active':
-        return classes.activeChip;
+        return { backgroundColor: '#a5d6a7', color: '#fff' };
       case 'pending':
-        return classes.pendingChip;
+        return { backgroundColor: '#ffe082', color: '#fff' };
       case 'error':
-        return classes.errorChip;
+        return { backgroundColor: '#ef9a9a', color: '#fff' };
       default:
-        return '';
+        return {};
     }
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper style={{ padding: 16, marginBottom: 16 }}>
       <Typography variant="h6" gutterBottom>
         Service Status
       </Typography>
-      <List className={classes.list}>
+      <List style={{ width: '100%' }}>
         {statusItems.map((item, index) => (
-          <ListItem key={index} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
+          <ListItem key={index} style={{
+            borderRadius: 4,
+            marginBottom: 8,
+            '&:hover': {
+              backgroundColor: '#e0e0e0',
+            },
+          }}>
+            <ListItemIcon style={{ minWidth: 40 }}>
               <FiberManualRecordIcon
-                className={`${classes.statusIcon} ${getIconClass(item.status)}`}
-              />
+                style={{ fontSize: 12, ...getIconStyle(item.status) }}
             </ListItemIcon>
             <ListItemText
               primary={item.name}
@@ -122,7 +125,7 @@ export const StatusList = () => {
             <Chip
               label={item.status}
               size="small"
-              className={`${classes.chip} ${getChipClass(item.status)}`}
+              style={{ marginLeft: 'auto', fontWeight: 500, ...getChipStyle(item.status) }}
             />
           </ListItem>
         ))}
