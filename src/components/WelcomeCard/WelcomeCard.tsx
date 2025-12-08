@@ -1,8 +1,7 @@
 import React from 'react';
 import { Card, CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const getStyles = (theme: any) => ({
   card: {
     marginBottom: theme.spacing(2),
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -20,18 +19,21 @@ const useStyles = makeStyles(theme => ({
     fontSize: 16,
     opacity: 0.9,
   },
-}));
+});
 
 export const WelcomeCard = () => {
-  const classes = useStyles();
+  const theme = {
+    spacing: (factor: number) => `${0.25 * factor}rem`,
+  };
+  const styles = getStyles(theme);
 
   return (
-    <Card className={classes.card}>
+    <Card style={styles.card}>
       <CardContent>
-        <Typography className={classes.title}>
+        <Typography style={styles.title}>
           Welcome to Simple Plugin
         </Typography>
-        <Typography className={classes.subtitle}>
+        <Typography style={styles.subtitle}>
           This is a demonstration of a Backstage frontend plugin with multiple
           components using MUI makeStyles.
         </Typography>

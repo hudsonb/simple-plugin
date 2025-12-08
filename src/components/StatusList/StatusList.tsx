@@ -8,10 +8,9 @@ import {
   Typography,
   Chip,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
-const useStyles = makeStyles(theme => ({
+const getStyles = (theme: any) => ({
   paper: {
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -22,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   listItem: {
     borderRadius: theme.shape.borderRadius,
     marginBottom: theme.spacing(1),
-    '&:hover': {
+    ':hover': {
       backgroundColor: theme.palette.action.hover,
     },
   },
@@ -57,7 +56,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.error.light,
     color: theme.palette.error.contrastText,
   },
-}));
+});
 
 interface StatusItem {
   name: string;
@@ -66,7 +65,17 @@ interface StatusItem {
 }
 
 export const StatusList = () => {
-  const classes = useStyles();
+  const theme = {
+    spacing: (factor: number) => `${0.25 * factor}rem`,
+    shape: { borderRadius: 4 },
+    palette: {
+      action: { hover: '#f5f5f5' },
+      success: { main: '#4caf50', light: '#81c784', contrastText: '#fff' },
+      warning: { main: '#ff9800', light: '#ffb74d', contrastText: '#fff' },
+      error: { main: '#f44336', light: '#e57373', contrastText: '#fff' },
+    },
+  };
+  const styles = getStyles(theme);
 
   const statusItems: StatusItem[] = [
     { name: 'Service A', status: 'active', description: 'Running smoothly' },
@@ -103,17 +112,16 @@ export const StatusList = () => {
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper style={styles.paper}>
       <Typography variant="h6" gutterBottom>
         Service Status
       </Typography>
-      <List className={classes.list}>
+      <List style={styles.list}>
         {statusItems.map((item, index) => (
-          <ListItem key={index} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
+          <ListItem key={index} style={styles.listItem}>
+            <ListItemIcon style={styles.listItemIcon}>
               <FiberManualRecordIcon
-                className={`${classes.statusIcon} ${getIconClass(item.status)}`}
-              />
+                style={{ ...styles.statusIcon, ...styles[`${item.status}Icon`] }}
             </ListItemIcon>
             <ListItemText
               primary={item.name}
@@ -122,7 +130,7 @@ export const StatusList = () => {
             <Chip
               label={item.status}
               size="small"
-              className={`${classes.chip} ${getChipClass(item.status)}`}
+              style={{ ...styles.chip, ...styles[`${item.status}Chip`] }}
             />
           </ListItem>
         ))}
