@@ -8,56 +8,8 @@ import {
   Typography,
   Chip,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  list: {
-    width: '100%',
-  },
-  listItem: {
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(1),
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-  listItemIcon: {
-    minWidth: 40,
-  },
-  statusIcon: {
-    fontSize: 12,
-  },
-  activeIcon: {
-    color: theme.palette.success.main,
-  },
-  pendingIcon: {
-    color: theme.palette.warning.main,
-  },
-  errorIcon: {
-    color: theme.palette.error.main,
-  },
-  chip: {
-    marginLeft: 'auto',
-    fontWeight: 500,
-  },
-  activeChip: {
-    backgroundColor: theme.palette.success.light,
-    color: theme.palette.success.contrastText,
-  },
-  pendingChip: {
-    backgroundColor: theme.palette.warning.light,
-    color: theme.palette.warning.contrastText,
-  },
-  errorChip: {
-    backgroundColor: theme.palette.error.light,
-    color: theme.palette.error.contrastText,
-  },
-}));
 
 interface StatusItem {
   name: string;
@@ -66,7 +18,53 @@ interface StatusItem {
 }
 
 export const StatusList = () => {
-  const classes = useStyles();
+  const styles = {
+    paper: {
+      padding: '16px',
+      marginBottom: '16px',
+    },
+    list: {
+      width: '100%',
+    },
+    listItem: {
+      borderRadius: '4px',
+      marginBottom: '8px',
+      '&:hover': {
+        backgroundColor: '#f5f5f5',
+      },
+    },
+    listItemIcon: {
+      minWidth: '40px',
+    },
+    statusIcon: {
+      fontSize: '12px',
+    },
+    activeIcon: {
+      color: '#4caf50',
+    },
+    pendingIcon: {
+      color: '#ff9800',
+    },
+    errorIcon: {
+      color: '#f44336',
+    },
+    chip: {
+      marginLeft: 'auto',
+      fontWeight: 500,
+    },
+    activeChip: {
+      backgroundColor: '#a5d6a7',
+      color: '#ffffff',
+    },
+    pendingChip: {
+      backgroundColor: '#ffcc80',
+      color: '#ffffff',
+    },
+    errorChip: {
+      backgroundColor: '#ef9a9a',
+      color: '#ffffff',
+    },
+  };
 
   const statusItems: StatusItem[] = [
     { name: 'Service A', status: 'active', description: 'Running smoothly' },
@@ -103,16 +101,16 @@ export const StatusList = () => {
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper style={styles.paper}>
       <Typography variant="h6" gutterBottom>
         Service Status
       </Typography>
-      <List className={classes.list}>
+      <List style={styles.list}>
         {statusItems.map((item, index) => (
-          <ListItem key={index} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
+          <ListItem key={index} style={styles.listItem}>
+            <ListItemIcon style={styles.listItemIcon}>
               <FiberManualRecordIcon
-                className={`${classes.statusIcon} ${getIconClass(item.status)}`}
+                style={{ ...styles.statusIcon, ...styles[`${item.status}Icon`] }}
               />
             </ListItemIcon>
             <ListItemText
@@ -122,7 +120,7 @@ export const StatusList = () => {
             <Chip
               label={item.status}
               size="small"
-              className={`${classes.chip} ${getChipClass(item.status)}`}
+              style={{ ...styles.chip, ...styles[`${item.status}Chip`] }}
             />
           </ListItem>
         ))}
