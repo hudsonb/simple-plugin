@@ -1,70 +1,66 @@
 import React from 'react';
 import { Paper, Typography, Grid } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import InfoIcon from '@material-ui/icons/Info';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-export const InfoPanel = () => {
-  const theme = useTheme();
-  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
-
-  const infoItems = [
-    { Icon: InfoIcon, label: 'Total Items', value: '42' },
-    { Icon: TrendingUpIcon, label: 'Active', value: '38' },
-    { Icon: CheckCircleIcon, label: 'Completed', value: '4' },
-  ];
-
-  const paperStyle: React.CSSProperties = {
+const useStyles = makeStyles(theme => ({
+  paper: {
     padding: theme.spacing(3),
     marginBottom: theme.spacing(2),
     backgroundColor: theme.palette.background.paper,
-  };
-
-  const iconStyle: React.CSSProperties = {
-    marginRight: theme.spacing(2),
-    color: theme.palette.primary.main,
-    fontSize: 32,
-  };
-
-  const textStyle: React.CSSProperties = {
-    fontSize: 14,
-    color: theme.palette.text.secondary,
-  };
-
-  const valueStyle: React.CSSProperties = {
-    fontSize: 18,
-    fontWeight: 600,
-    color: theme.palette.text.primary,
-  };
-
-  const getInfoItemStyle = (isHovered: boolean): React.CSSProperties => ({
+  },
+  infoItem: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: isHovered ? theme.palette.action.hover : theme.palette.background.default,
-    transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
-    transition: 'all 0.3s ease-in-out',
-  });
+    backgroundColor: theme.palette.background.default,
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+      transform: 'translateY(-2px)',
+      transition: 'all 0.3s ease-in-out',
+    },
+  },
+  icon: {
+    marginRight: theme.spacing(2),
+    color: theme.palette.primary.main,
+    fontSize: 32,
+  },
+  text: {
+    fontSize: 14,
+    color: theme.palette.text.secondary,
+  },
+  value: {
+    fontSize: 18,
+    fontWeight: 600,
+    color: theme.palette.text.primary,
+  },
+}));
+
+export const InfoPanel = () => {
+  const classes = useStyles();
+
+  const infoItems = [
+    { icon: <InfoIcon className={classes.icon} />, label: 'Total Items', value: '42' },
+    { icon: <TrendingUpIcon className={classes.icon} />, label: 'Active', value: '38' },
+    { icon: <CheckCircleIcon className={classes.icon} />, label: 'Completed', value: '4' },
+  ];
 
   return (
-    <Paper style={paperStyle}>
+    <Paper className={classes.paper}>
       <Typography variant="h6" gutterBottom>
         Information Panel
       </Typography>
       <Grid container spacing={2}>
         {infoItems.map((item, index) => (
           <Grid item xs={12} sm={4} key={index}>
-            <div
-              style={getInfoItemStyle(hoveredIndex === index)}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <item.Icon style={iconStyle} />
+            <div className={classes.infoItem}>
+              {item.icon}
               <div>
-                <Typography style={textStyle}>{item.label}</Typography>
-                <Typography style={valueStyle}>{item.value}</Typography>
+                <Typography className={classes.text}>{item.label}</Typography>
+                <Typography className={classes.value}>{item.value}</Typography>
               </div>
             </div>
           </Grid>
