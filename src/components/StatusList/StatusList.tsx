@@ -8,56 +8,8 @@ import {
   Typography,
   Chip,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  list: {
-    width: '100%',
-  },
-  listItem: {
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(1),
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-  listItemIcon: {
-    minWidth: 40,
-  },
-  statusIcon: {
-    fontSize: 12,
-  },
-  activeIcon: {
-    color: theme.palette.success.main,
-  },
-  pendingIcon: {
-    color: theme.palette.warning.main,
-  },
-  errorIcon: {
-    color: theme.palette.error.main,
-  },
-  chip: {
-    marginLeft: 'auto',
-    fontWeight: 500,
-  },
-  activeChip: {
-    backgroundColor: theme.palette.success.light,
-    color: theme.palette.success.contrastText,
-  },
-  pendingChip: {
-    backgroundColor: theme.palette.warning.light,
-    color: theme.palette.warning.contrastText,
-  },
-  errorChip: {
-    backgroundColor: theme.palette.error.light,
-    color: theme.palette.error.contrastText,
-  },
-}));
 
 interface StatusItem {
   name: string;
@@ -66,7 +18,8 @@ interface StatusItem {
 }
 
 export const StatusList = () => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
 
   const statusItems: StatusItem[] = [
     { name: 'Service A', status: 'active', description: 'Running smoothly' },
@@ -76,44 +29,83 @@ export const StatusList = () => {
     { name: 'Service E', status: 'error', description: 'Needs attention' },
   ];
 
-  const getIconClass = (status: string) => {
+  const paperStyle: React.CSSProperties = {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  };
+
+  const listStyle: React.CSSProperties = {
+    width: '100%',
+  };
+
+  const listItemIconStyle: React.CSSProperties = {
+    minWidth: 40,
+  };
+
+  const getListItemStyle = (isHovered: boolean): React.CSSProperties => ({
+    borderRadius: theme.shape.borderRadius,
+    marginBottom: theme.spacing(1),
+    backgroundColor: isHovered ? theme.palette.action.hover : 'transparent',
+  });
+
+  const getIconStyle = (status: string): React.CSSProperties => {
     switch (status) {
       case 'active':
-        return classes.activeIcon;
+        return { fontSize: 12, color: theme.palette.success.main };
       case 'pending':
-        return classes.pendingIcon;
+        return { fontSize: 12, color: theme.palette.warning.main };
       case 'error':
-        return classes.errorIcon;
+        return { fontSize: 12, color: theme.palette.error.main };
       default:
-        return '';
+        return { fontSize: 12 };
     }
   };
 
-  const getChipClass = (status: string) => {
+  const getChipStyle = (status: string): React.CSSProperties => {
+    const baseChipStyle: React.CSSProperties = {
+      marginLeft: 'auto',
+      fontWeight: 500,
+    };
+
     switch (status) {
       case 'active':
-        return classes.activeChip;
+        return {
+          ...baseChipStyle,
+          backgroundColor: theme.palette.success.light,
+          color: theme.palette.success.contrastText,
+        };
       case 'pending':
-        return classes.pendingChip;
+        return {
+          ...baseChipStyle,
+          backgroundColor: theme.palette.warning.light,
+          color: theme.palette.warning.contrastText,
+        };
       case 'error':
-        return classes.errorChip;
+        return {
+          ...baseChipStyle,
+          backgroundColor: theme.palette.error.light,
+          color: theme.palette.error.contrastText,
+        };
       default:
-        return '';
+        return baseChipStyle;
     }
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper style={paperStyle}>
       <Typography variant="h6" gutterBottom>
         Service Status
       </Typography>
-      <List className={classes.list}>
+      <List style={listStyle}>
         {statusItems.map((item, index) => (
-          <ListItem key={index} className={classes.listItem}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <FiberManualRecordIcon
-                className={`${classes.statusIcon} ${getIconClass(item.status)}`}
-              />
+          <ListItem
+            key={index}
+            style={getListItemStyle(hoveredIndex === index)}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            <ListItemIcon style={listItemIconStyle}>
+              <FiberManualRecordIcon style={getIconStyle(item.status)} />
             </ListItemIcon>
             <ListItemText
               primary={item.name}
@@ -122,7 +114,7 @@ export const StatusList = () => {
             <Chip
               label={item.status}
               size="small"
-              className={`${classes.chip} ${getChipClass(item.status)}`}
+              style={getChipStyle(item.status)}
             />
           </ListItem>
         ))}
