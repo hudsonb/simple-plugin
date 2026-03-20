@@ -1,6 +1,6 @@
 # Simple Plugin
 
-A simple Backstage frontend plugin demonstrating multiple React components with MUI makeStyles.
+A simple Backstage frontend plugin demonstrating multiple React components with MUI inline styles.
 
 ## Features
 
@@ -9,7 +9,7 @@ A simple Backstage frontend plugin demonstrating multiple React components with 
 - **StatusList**: A list component showing service statuses
 - **ExampleComponent**: Main component that combines all the above
 
-All components use Material-UI's `makeStyles` for styling.
+All components use Material-UI inline style props for styling.
 
 ## Development
 
